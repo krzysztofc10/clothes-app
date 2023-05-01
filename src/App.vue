@@ -1,32 +1,59 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
+    <Navbar v-if="$route.name !== 'Login'"/>
     <router-view/>
   </div>
 </template>
 
+<script>
+import Navbar from '@/components/Navbar';
+export default {
+  name: 'App',
+  components: { Navbar }
+}
+</script>
+
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+html {
+    overflow-y: scroll;
 }
 
-nav {
-  padding: 30px;
+.overflow-y-hidden {
+    overflow-y: hidden;
+}
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+body {
+    background: white;
+}
 
-    &.router-link-exact-active {
-      color: #42b983;
+html, 
+body,
+html *,
+body * {
+    font-family: 'Alkatra' !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale; 
+    text-rendering: optimizeLegibility;
+    image-rendering: -webkit-optimize-contrast !important;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    word-break: break-word;
+}
+
+body * {
+    scrollbar-width: thin;
+
+    &::-webkit-scrollbar {
+        width: 8px;
     }
-  }
+
+    &::-webkit-scrollbar-track {
+        border-radius: 24px; 
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 24px;
+    }
 }
 </style>

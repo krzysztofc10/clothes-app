@@ -5,5 +5,7 @@
     "modal.like": "Podoba mi się",
     "modal.dislike": "Nie podoba mi się",
     "modal.character-number": "Ilość znaków: {number}",
-    "modal.wchich-to-look": "Na jaką część ubrania zwrócić uwagę?"
+    "modal.wchich-to-look": "Na jaką część ubrania zwrócić uwagę?",
+    "modal.upload": "Wyślij",
+    "modal.choose-outfit": "Wybierz część ubioru"
 }

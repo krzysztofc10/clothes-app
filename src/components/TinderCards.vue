@@ -45,24 +45,26 @@
             <template v-slot:body>
                 <div class="garment-wrapper">
                     <img class="img" :src="photo.url"/>
+                    <select class="select" v-model="selectedOutfit">
+                        <option value="" disabled hidden>{{ $t('modal.choose-outfit') }}</option>
+                        <option v-for="outfit in outfits" :key="outfit.outfit_id">{{ outfit.name }}</option>
+                    </select>
                     <div class="input-wrapper">
-                        <Input @onText="handleGarmentText"/>
-                        <span class="input-text">{{ $t('modal.character-number', { number: `${ garment.length }` }) }}</span>
+                        <Input @onText="handleInfoText"/>
+                        <span class="input-text">{{ $t('modal.character-number', { number: `${ info.length }` }) }}</span>
                     </div>
                 </div>
             </template>
             <template v-slot:footer>
                 <Button 
-                    @click.native="handleSendComment('nope')" 
+                    @click.native="hideUploadPhotoModal" 
                     class="btn--close" 
-                    :text="$t('modal.dislike')" 
-                    :icon="closeSmallIcon"
+                    :text="$t('modal.cancel')"
                 />
                 <Button 
-                    @click.native="handleSendComment('like')" 
+                    @click.native="handleUploadPhoto" 
                     class="btn--like" 
-                    :text="$t('modal.like')" 
-                    :icon="favoriteSmallIcon"
+                    :text="$t('modal.upload')" 
                 />
             </template>
         </Modal>
@@ -78,7 +80,14 @@ import Modal from '@/components/Modal';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
 import ModalMixin from '@/mixins/ModalMixin';
-import { getPhotos, ratePhoto, getPhoto, deletePhoto } from '@/api/index';
+import {
+    getPhotos,
+    ratePhoto,
+    getPhoto,
+    deletePhoto,
+    addPhotoInfo,
+    getOutfits
+} from '@/api/index';
 import CameraBtn from '@/components/CameraBtn';
 import favoriteIcon from '@/assets/img/favorite.svg';
 import closeIcon from '@/assets/img/close.svg';
@@ -93,10 +102,12 @@ export default {
     mixins: [ModalMixin],
     data() {
         return {
+            outfits: [],
             queue: [],
             history: [],
+            selectedOutfit: '',
             comment: '',
-            garment: '',
+            info: '',
             photo: {
                 url: '',
                 id: false
@@ -112,6 +123,8 @@ export default {
     },
     async created() {
         this.mock();
+        const data = await getOutfits();
+        this.outfits = data?.data;
     },
     mounted() {
         this.$bus.$on('showPhotoModal', (id) => this.handleShowUploadedPhotoModal(id));
@@ -120,11 +133,16 @@ export default {
         ...mapGetters(['getUserId'])
     },
     methods: {
+        async handleUploadPhoto() {
+            await addPhotoInfo(this.photo.id, this.selectedOutfit, this.info)
+            this.isModal = false;
+            this.type = '';
+        },
         handleText(text) {
             this.comment = text;
         },
-        handleGarmentText(text) {
-            this.garment = text;
+        handleInfoText(text) {
+            this.info = text;
         },
         async hideUploadPhotoModal() {
             this.isModal = false;
@@ -284,6 +302,13 @@ export default {
             height: 100px;
             min-width: 300px;
         }
+    }
+    
+    .select {
+        width: 300px;
+        height: 32px;
+        border: 1px solid #4F4F4F;
+        border-radius: 10px;
     }
 }
 </style>

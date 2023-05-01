@@ -25,6 +25,19 @@ export const deletePhoto = (photoId) => axios.post(`${ process.env.VUE_APP_SERVE
     { headers: { 'Content-type': 'application/json; charset=UTF-8' } }
 );
 
+export const addPhotoInfo = (photoId, category, info) => axios.post(`${ process.env.VUE_APP_SERVER_API }/api/addPhotoInfo`,
+    {
+        photoId,
+        category,
+        info
+    },
+    { headers: { 'Content-type': 'application/json; charset=UTF-8' } }
+);
+
+export const getOutfits = () => axios.get(`${ process.env.VUE_APP_SERVER_API }/api/getOutfits`,
+    { headers: { 'Content-type': 'application/json; charset=UTF-8' } }
+);
+
 export const getMyPhotos = (userId) => axios.post(`${ process.env.VUE_APP_SERVER_API }/api/getMyPhotos`,
     { userId },
     { headers: { 'Content-type': 'application/json; charset=UTF-8' } }

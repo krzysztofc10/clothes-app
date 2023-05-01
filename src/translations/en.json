@@ -5,5 +5,7 @@
     "modal.like": "Like & send",
     "modal.dislike": "Dislike & send",
     "modal.character-number": "Characters number: {number}",
-    "modal.wchich-to-look": "Which part of the garment to look at?"
+    "modal.wchich-to-look": "Which part of the garment to look at?",
+    "modal.upload": "Upload",
+    "modal.choose-outfit": "Choose a part of your outfit"
 }

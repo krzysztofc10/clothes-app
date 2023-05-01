@@ -47,7 +47,7 @@
                     <img class="img" :src="photo.url"/>
                     <select class="select" v-model="selectedOutfit">
                         <option value="" disabled hidden>{{ $t('modal.choose-outfit') }}</option>
-                        <option v-for="outfit in outfits" :key="outfit.outfit_id">{{ outfit.name }}</option>
+                        <option v-for="outfit in outfits" :key="outfit.outfit_id">{{ outfit[`name_${ $i18n.locale }`] }}</option>
                     </select>
                     <div class="input-wrapper">
                         <Input @onText="handleInfoText"/>

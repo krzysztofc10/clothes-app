@@ -7,10 +7,14 @@
             @submit="onSubmit"
         >
             <template slot-scope="scope">
-            <div
-                class="pic"
-                :style="{ 'background-image': `url(${ scope.data.src })` }"
-            />
+                <div
+                    class="pic"
+                    :style="{ 'background-image': `url(${ scope.data.src })` }"
+                />
+                <div class="overlay" v-if="scope.data.category">
+                    <span class="title">{{ scope.data.category }}</span>
+                    <span class="subtitle">{{ scope.data.info }}</span>
+                </div>
             </template>
             <img class="like-pointer" slot="like" :src="favoriteIcon">
             <img class="nope-pointer" slot="nope" :src="closeIcon">
@@ -211,6 +215,29 @@ export default {
 </script>
 
 <style lang="scss">
+
+.overlay {
+    position: absolute;
+    bottom: 0px;
+    background-color: rgba(179,179,179,0.6);
+    height: 80px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+
+    .title {
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 24px;
+    }
+    .subtitle {
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 22px;
+    }
+}
+
 #tinderCards .vue-tinder {
   position: absolute;
   z-index: 1;
@@ -257,7 +284,7 @@ export default {
 .pic {
   width: 100%;
   height: 100%;
-  background-size: contain;
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }

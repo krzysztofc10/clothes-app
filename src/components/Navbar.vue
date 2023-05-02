@@ -2,9 +2,9 @@
     <div class="navbar">
         <RoundButton
             v-if="isDashboard"
-            @click.native="$router.push({ path: '/profile' })"
-            :img="getUserAvatar || personIcon"
-            :avatar="Boolean(getUserAvatar)"
+            :class="{ 'navbar__right-btn' : !isDashboard }"
+            @click.native="$router.push({ path: '/chat' })"
+            :img="settingsIcon"
             nav
         />
         <RoundButton
@@ -18,9 +18,9 @@
             :src="logo"
         />
         <RoundButton
-            :class="{ 'navbar__right-btn' : !isDashboard }"
-            @click.native="$router.push({ path: '/chat' })"
-            :img="forumIcon"
+            @click.native="$router.push({ path: '/profile' })"
+            :img="getUserAvatar || personIcon"
+            :avatar="Boolean(getUserAvatar)"
             nav
         />
     </div>
@@ -30,7 +30,7 @@
 import { mapGetters } from 'vuex';
 import RoundButton from './RoundButton';
 import personIcon from '@/assets/img/person.svg';
-import forumIcon from '@/assets/img/forum.svg';
+import settingsIcon from '@/assets/img/settings.svg';
 import arrowIcon from '@/assets/img/arrow_left.svg';
 import logo from '@/assets/img/logo.svg';
 
@@ -40,7 +40,7 @@ export default {
     data() {
         return {
             personIcon,
-            forumIcon,
+            settingsIcon,
             arrowIcon,
             logo
         }

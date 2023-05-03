@@ -31,13 +31,10 @@ export default {
         const data = await getMyPhotos(this.getUserId);
 
         this.photos = data?.data;
-
-        console.log(this.photos);
     },
     computed: {
-        ...mapGetters(['getUserId'])
-    },
-    methods: {}
+        ...mapGetters(['getUserId']);
+    }
 }
 </script>
 

@@ -11,26 +11,46 @@
             </div>
         </div>
         <span class="divider">{{ $t('profile.comments') }}</span>
+        <div class="container-wrapper">
+            <div
+                v-for="(comment, index) in comments"
+                :class="[
+                    'container',
+                    {
+                        'container--positive' : comment.star === '10',
+                        'container--negative' : comment.star === '1'
+                    }
+                ]"
+                :key="`${ index }-${ uuidv4() }`"
+            >
+                <img src="@/assets/img/person.svg" width="32" alt="Avatar">
+                <p>{{ comment.comment }}</p>
+                <span class="time-right">11:00</span>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
-import { getPhoto } from '@/api/index';
+import { getPhoto, getRatings } from '@/api/index';
+import { v4 as uuidv4 } from 'uuid';
 
 export default {
     name: 'Profile',
     data() {
         return {
-            photo: {}
+            uuidv4,
+            photo: {},
+            comments: []
         }
     },
     async mounted() {
         const id = this.$route.params.id;
         const data = await getPhoto(id);
+        const comments = await getRatings(id);
 
         this.photo = data?.data[0];
-
-        console.log(this.photo);
+        this.comments = comments?.data;
     }
 }
 </script>
@@ -42,6 +62,28 @@ export default {
     align-items: center;
     flex-direction: column;
     position: relative;
+
+    .container-wrapper {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .container {
+        border: 2px solid #dedede;
+        background-color: #f1f1f1;
+        border-radius: 5px;
+        padding: 10px;
+        margin: 10px;
+
+        &--positive {
+            background-color: rgba(129,247,194,0.2);
+        }
+
+        &--negative {
+            background-color: rgba(250,168,154,0.2);
+        }
+    }
 
     .divider {
         display: flex;

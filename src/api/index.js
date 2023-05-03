@@ -20,6 +20,11 @@ export const getPhoto = (photoId) => axios.post(`${ process.env.VUE_APP_SERVER_A
     { headers: { 'Content-type': 'application/json; charset=UTF-8' } }
 );
 
+export const getRatings = (photoId) => axios.post(`${ process.env.VUE_APP_SERVER_API }/api/getRatings`,
+    { photoId },
+    { headers: { 'Content-type': 'application/json; charset=UTF-8' } }
+);
+
 export const deletePhoto = (photoId) => axios.post(`${ process.env.VUE_APP_SERVER_API }/api/deletePhoto`,
     { photoId },
     { headers: { 'Content-type': 'application/json; charset=UTF-8' } }

@@ -9,7 +9,7 @@
         />
         <RoundButton
             v-else
-            @click.native="$router.push({ path: '/dashboard' })"
+            @click.native="handleArrowClick"
             :img="arrowIcon"
             nav
         />
@@ -49,6 +49,13 @@ export default {
         ...mapGetters(['getUserAvatar']),
         isDashboard() {
             return this.$route.name === 'Dashboard';
+        }
+    },
+    methods: {
+        handleArrowClick() {
+            return this.$route.name === 'ProfilePhoto'
+                ? this.$router.back()
+                : this.$router.push({ path: '/dashboard' });
         }
     }
 }

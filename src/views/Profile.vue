@@ -33,7 +33,7 @@ export default {
         this.photos = data?.data;
     },
     computed: {
-        ...mapGetters(['getUserId']);
+        ...mapGetters(['getUserId'])
     }
 }
 </script>

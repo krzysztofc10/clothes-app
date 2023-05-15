@@ -3,7 +3,7 @@
         <RoundButton
             v-if="isDashboard"
             :class="{ 'navbar__right-btn' : !isDashboard }"
-            @click.native="$router.push({ path: '/chat' })"
+            @click.native="$router.push({ path: '/settings' })"
             :img="settingsIcon"
             nav
         />

@@ -11,7 +11,9 @@ Vue.use(VueI18n);
 
 const messages = { en, pl };
 
-const i18n = new VueI18n({ locale: 'en', fallbackLocale: 'en', messages });
+const lang = localStorage.getItem('lang');
+
+const i18n = new VueI18n({ locale: lang || 'en', fallbackLocale: 'en', messages });
 
 Vue.prototype.$bus = new Vue();
 

@@ -8,7 +8,7 @@
         >
             <template slot-scope="scope">
                 <div
-                    class="pic"
+                    :class="[ 'pic', { 'pic--last' : scope.data.last_one } ]"
                     :style="{ 'background-image': `url(${ scope.data.src })` }"
                 />
                 <div class="overlay" v-if="scope.data.category">
@@ -287,6 +287,10 @@ export default {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+
+  &--last {
+    background-position: initial;
+  }
 }
 
 .btns {

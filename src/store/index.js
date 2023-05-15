@@ -22,10 +22,7 @@ export default new Vuex.Store({
       setSurname: (state, payload) => state.user.surname = payload,
       setUserId: (state, payload) => state.user.userId = payload,
       setEmail: (state, payload) => state.user.email = payload,
-      setAvatar: (state, payload) => state.user.avatar = payload
-  },
-  actions: {
-  },
-  modules: {
+      setAvatar: (state, payload) => state.user.avatar = payload,
+      reset: (state) => state = {}
   }
 })

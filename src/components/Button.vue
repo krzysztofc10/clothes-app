@@ -1,7 +1,7 @@
 <template>
     <button class="btn">
         {{ text }}
-        <img :src="icon">
+        <img v-if="icon" :src="icon">
     </button>
 </template>
 

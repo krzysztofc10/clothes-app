@@ -2,7 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Login from '@/views/Login';
 import Profile from '@/views/Profile';
-import Chat from '@/views/Chat';
+import Settings from '@/views/Settings';
 import Dashboard from '@/views/Dashboard';
 import ProfilePhoto from '@/views/ProfilePhoto';
 
@@ -30,9 +30,9 @@ const routes = [
     component: ProfilePhoto
   },
   {
-    path: '/chat',
-    name: 'Chat',
-    component: Chat
+    path: '/settings',
+    name: 'Settings',
+    component: Settings
   }
 ]
 

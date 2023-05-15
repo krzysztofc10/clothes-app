@@ -8,5 +8,7 @@
     "modal.wchich-to-look": "Which part of the garment to look at?",
     "modal.upload": "Upload",
     "modal.choose-outfit": "Choose a part of your outfit",
-    "profile.comments": "Comments"
+    "profile.comments": "Comments",
+    "settings.lang": "Language",
+    "settings.logout": "Logout"
 }

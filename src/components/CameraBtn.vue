@@ -1,5 +1,5 @@
 <template>
-    <div class="camera-btn">
+    <div class="camera-btn" @click="$refs.inputEl.click()">
         <RoundButton :img="cameraIcon"/>
         <input
             class="camera-btn__input"
@@ -23,12 +23,7 @@ export default {
     name: 'CameraBtn',
     components: { RoundButton },
     data() {
-        return {
-            cameraIcon
-        }
-    },
-    mounted() {
-        this.$bus.$on('cameraClick', () => this.$refs.inputEl.click());
+        return { cameraIcon }
     },
     computed: {
         ...mapGetters(['getUserId'])

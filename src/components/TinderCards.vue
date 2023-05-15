@@ -21,7 +21,7 @@
         </Tinder>
         <div class="btns">
             <RoundButton :img="closeIcon" @click.native="decide('nope')"/>
-            <CameraBtn @click.native="$bus.$emit('cameraClick')"/>
+            <CameraBtn/>
             <RoundButton @click.native="handleShowCommentModal" :img="commentIcon"/>
             <RoundButton :img="favoriteIcon" @click.native="decide('like')"/>
         </div>

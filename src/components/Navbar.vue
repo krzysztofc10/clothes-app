@@ -45,6 +45,12 @@ export default {
             logo
         }
     },
+    created() {
+        if (!this.$store.state.user.userId) {
+            this.$router.push({ path: '/' });
+            this.$store.commit('reset');
+        };
+    },
     computed: {
         ...mapGetters(['getUserAvatar']),
         isDashboard() {

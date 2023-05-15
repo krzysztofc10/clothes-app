@@ -9,6 +9,7 @@
     "modal.upload": "Upload",
     "modal.choose-outfit": "Choose a part of your outfit",
     "profile.comments": "Comments",
+    "profile.no-photos": "Please upload some photos and wait for ratings",
     "settings.lang": "Language",
     "settings.logout": "Logout"
 }

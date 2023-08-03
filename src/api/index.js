@@ -34,7 +34,8 @@ export const addPhotoInfo = (photoId, category, info) => axios.post(`${ process.
     {
         photoId,
         category,
-        info
+        info,
+        date: Date.now()
     },
     { headers: { 'Content-type': 'application/json; charset=UTF-8' } }
 );
@@ -58,7 +59,8 @@ export const ratePhoto = (photoId, userId, numOfStars, comment) => axios.post(`$
         photoId,
         userId,
         numOfStars,
-        comment
+        comment,
+        date: Date.now()
     },
     { headers: { 'Content-type': 'application/json; charset=UTF-8' } }
 );

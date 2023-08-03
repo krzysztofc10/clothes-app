@@ -1,5 +1,11 @@
 <template>
     <div class="photo-tiles">
+        <div class="photo-tiles__select-wrapper">
+            <span class="text">{{ $t('profile.sort') }}</span>
+            <select class="select" v-model="selectedSort" @change="handleChangeSort">
+                <option v-for="(sort) in sortOptions" :key="sort" :value="sort">{{ $t(`profile.photo.${ sort }`) }}</option>
+            </select>
+        </div>
         <div v-if="photos.length" class="photo-tiles__wrapper">
             <div
                 v-for="photo in photos"
@@ -9,8 +15,19 @@
                 :style="{ 'background-image': `url(${ photo.src })` }"
             >
             <div class="overlay" v-if="photo.category">
-                <span class="title">{{ photo.category }}</span>
-                <span class="subtitle">{{ photo.info }}</span>
+                <div class="overlay__first-block">
+                    <span class="title">{{ photo.category }}</span>
+                    <StarRating
+                        class="star-rating"
+                        :rating="photo.avg"
+                        max-rating="1"
+                        star-size="20"
+                        read-only="true"
+                        :show-rating="false"
+                    />
+                    <span>{{ photo.avg }}</span>
+                </div>
+                <span class="overlay__subtitle">{{ photo.info }}</span>
             </div>
             </div>
         </div>
@@ -21,12 +38,16 @@
 <script>
 import { mapGetters } from 'vuex';
 import { getMyPhotos } from '@/api/index';
+import StarRating from 'vue-star-rating';
 
 export default {
     name: 'Profile',
+    components: { StarRating },
     data() {
         return {
-            photos: []
+            photos: [],
+            selectedSort: 'new',
+            sortOptions: ['new', 'old']
         }
     },
     async mounted() {
@@ -36,12 +57,24 @@ export default {
     },
     computed: {
         ...mapGetters(['getUserId'])
+    },
+    methods: {
+        handleChangeSort() {
+            
+        }
     }
 }
 </script>
 
 <style lang="scss">
 .photo-tiles {
+    &__select-wrapper {
+        display: flex;
+        justify-content: center;
+        margin: 10px;
+        gap: 8px;
+    }
+
     &__wrapper {
         width: 100%;
         height: 100%;
@@ -80,18 +113,28 @@ export default {
             flex-direction: column;
             padding: 8px;
 
+            &__first-block {
+                display: flex;
+                justify-content: space-between;
+            }
+
             .title {
                 font-weight: 600;
                 font-size: 20px;
                 line-height: 24px;
             }
-            .subtitle {
+
+            .star-rating {
+                margin-left: auto;
+                margin-right: 4px;
+            }
+
+            &__subtitle {
                 font-weight: 400;
                 font-size: 14px;
                 line-height: 22px;
             }
         }
-
     }
 
     &__title {

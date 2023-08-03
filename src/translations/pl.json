@@ -11,5 +11,8 @@
     "profile.comments": "Komenatrze",
     "profile.no-photos": "Wyślij kilka zdjęć i poczekaj na ocenę",
     "settings.lang": "Język",
-    "settings.logout": "Wyloguj"
+    "settings.logout": "Wyloguj",
+    "profile.photo.old": "Najstarsze",
+    "profile.photo.new": "Najnowsze",
+    "profile.sort": "Sortuj po:"
 }

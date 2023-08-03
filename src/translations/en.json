@@ -11,5 +11,8 @@
     "profile.comments": "Comments",
     "profile.no-photos": "Please upload some photos and wait for ratings",
     "settings.lang": "Language",
-    "settings.logout": "Logout"
+    "settings.logout": "Logout",
+    "profile.photo.old": "Oldest",
+    "profile.photo.new": "Newest",
+    "profile.sort": "Sort by:"
 }

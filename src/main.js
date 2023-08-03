@@ -17,6 +17,8 @@ const i18n = new VueI18n({ locale: lang || 'en', fallbackLocale: 'en', messages 
 
 Vue.prototype.$bus = new Vue();
 
+Vue.use(require('vue-moment'));
+
 new Vue({
   router,
   store,

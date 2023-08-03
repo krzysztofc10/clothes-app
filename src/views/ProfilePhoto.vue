@@ -6,11 +6,28 @@
             :style="{ 'background-image': `url(${ photo.src })` }"
         >
             <div class="overlay" v-if="photo.category">
-                <span class="title">{{ photo.category }}</span>
+                <div class="overlay__first-block">
+                    <span class="title">{{ photo.category }}</span>
+                    <StarRating
+                        class="star-rating"
+                        :rating="rating"
+                        max-rating="1"
+                        star-size="20"
+                        read-only="true"
+                        :show-rating="false"
+                    />
+                    <span>{{ rating }}</span>
+                </div>
                 <span class="subtitle">{{ photo.info }}</span>
             </div>
         </div>
         <span class="divider">{{ $t('profile.comments') }}</span>
+        <div class="profile-photo__select-wrapper">
+            <span class="text">{{ $t('profile.sort') }}</span>
+            <select class="select" v-model="selectedSort" @change="handleChangeSort">
+                <option v-for="(sort) in sortOptions" :key="sort" :value="sort">{{ $t(`profile.photo.${ sort }`) }}</option>
+            </select>
+        </div>
         <div class="container-wrapper">
             <div
                 v-for="(comment, index) in comments"
@@ -25,7 +42,7 @@
             >
                 <img src="@/assets/img/person.svg" width="32" alt="Avatar">
                 <p>{{ comment.comment }}</p>
-                <span class="time-right">11:00</span>
+                <span class="time-right">{{ $moment(parseInt(comment.date)).format("DD-MM-YYYY HH:mm:ss") }}</span>
             </div>
         </div>
     </div>
@@ -34,14 +51,19 @@
 <script>
 import { getPhoto, getRatings } from '@/api/index';
 import { v4 as uuidv4 } from 'uuid';
+import StarRating from 'vue-star-rating';
 
 export default {
     name: 'Profile',
+    components: { StarRating },
     data() {
         return {
             uuidv4,
             photo: {},
-            comments: []
+            comments: [],
+            selectedSort: 'new',
+            sortOptions: ['new', 'old'],
+            rating: 0
         }
     },
     async mounted() {
@@ -51,6 +73,14 @@ export default {
 
         this.photo = data?.data[0];
         this.comments = comments?.data;
+
+        const ratings = this.comments.map(el => parseInt(el.star));
+        this.rating = ratings.reduce((x, y) => x + y) / ratings.length;
+    },
+    methods: {
+        handleChangeSort() {
+            
+        }
     }
 }
 </script>
@@ -62,6 +92,16 @@ export default {
     align-items: center;
     flex-direction: column;
     position: relative;
+
+    &__select-wrapper {
+        display: flex;
+        margin-top: 8px;
+        gap: 8px;
+
+        .select {
+            width: 100px;
+        }
+    }
 
     .container-wrapper {
         display: flex;
@@ -115,12 +155,23 @@ export default {
         flex-direction: column;
         padding: 8px;
 
+        &__first-block {
+            display: flex;
+            justify-content: space-between;
+        }
+
         .title {
             font-weight: 600;
             font-size: 20px;
             line-height: 24px;
         }
-        .subtitle {
+
+        .star-rating {
+            margin-left: auto;
+            margin-right: 4px;
+        }
+
+        &__subtitle {
             font-weight: 400;
             font-size: 14px;
             line-height: 22px;

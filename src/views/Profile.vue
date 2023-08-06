@@ -14,15 +14,15 @@
                 class="tile"
                 :style="{ 'background-image': `url(${ photo.src })` }"
             >
-            <div class="overlay" v-if="photo.category">
+            <div class="overlay">
                 <div class="overlay__first-block">
                     <span class="title">{{ photo.category }}</span>
                     <StarRating
                         class="star-rating"
                         :rating="photo.avg"
-                        max-rating="1"
-                        star-size="20"
-                        read-only="true"
+                        :max-rating="1"
+                        :star-size="20"
+                        :read-only="true"
                         :show-rating="false"
                     />
                     <span>{{ photo.avg }}</span>
@@ -54,13 +54,19 @@ export default {
         const data = await getMyPhotos(this.getUserId);
 
         this.photos = data?.data;
+
+        this.handleChangeSort();
     },
     computed: {
         ...mapGetters(['getUserId'])
     },
     methods: {
         handleChangeSort() {
-            
+            if (this.selectedSort === 'new') {
+                this.photos.sort((a, b) => parseInt(b.date) - parseInt(a.date));
+            } else if (this.selectedSort === 'old') {
+                this.photos.sort((a, b) => parseInt(a.date) - parseInt(b.date));
+            }
         }
     }
 }

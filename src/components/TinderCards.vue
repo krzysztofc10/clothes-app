@@ -116,6 +116,7 @@ export default {
                 url: '',
                 id: false
             },
+            ratedPhotos: [],
             uuidv4,
             favoriteIcon,
             closeIcon,
@@ -174,12 +175,14 @@ export default {
             const list = [];
             const photos = await getPhotos(this.getUserId);
 
-            list.push(...photos?.data);
+            const filteredPhotos = photos?.data.filter(photo => !this.ratedPhotos.includes(photo.photo_id));
+
+            list.push(...filteredPhotos);
 
             if (list.length === 0) {
                 list.push({
                     last_one: true,
-                    photo_id: `${ uuidv4 }`,
+                    photo_id: `${ uuidv4() }`,
                     src: this.swipeCard
                 })
             }
@@ -195,6 +198,11 @@ export default {
                 this.mock();
                 return
             };
+            
+            if (item.src !== this.swipeCard) {
+                this.ratedPhotos.push(item.photo_id);
+            }
+            
             if (type === 'like') {
                 ratePhoto(item.photo_id, this.getUserId, '10', this.comment);
             }

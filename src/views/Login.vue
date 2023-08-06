@@ -4,13 +4,13 @@
             <img class="login__logo" :src="logo"/>
             <h1 class="login__title">{{ mode === 'login' ? $t('login') : $t('register') }}</h1>
             <div v-if="showGoogleLogin" class="google-login-btn" id="googleLoginBtn"></div>
-            <div v-if="mode === 'login'" class="login-block">
+            <div v-if="mode === 'login'" class="login-block" key="login">
                 <Input @onText="handleLoginEmail" :placeholder="$t('login.placeholder.email')"/>
                 <span v-if="showErrorMsg" class="error-msg">{{ $t('login.error-msg') }}</span>
                 <Button class="btn--primary" :text="$t('login.btn')" @click.native="handleLogin"/>
                 <a class="link" @click="mode = 'register'">{{ $t('register.btn') }}</a>
             </div>
-            <div v-if="mode === 'register'" class="register-block">
+            <div v-if="mode === 'register'" class="register-block" key="register">
                 <Input @onText="(e) => handleRegister('name', e)" :placeholder="$t('login.placeholder.name')"/>
                 <span v-if="validationErrors.name" class="error-msg">{{ $t('registration.incorrect.name') }}</span>
                 <Input @onText="(e) => handleRegister('surname', e)" :placeholder="$t('login.placeholder.surname')"/>
@@ -134,7 +134,7 @@ export default {
             if (!resp?.data.length) {
                 this.showErrorMsg = true
             } else {
-                this.$store.commit('setUserId', resp?.data[0]);
+                this.$store.commit('setUserId', resp?.data[0]?.user_id);
                 this.$router.push({ path: '/dashboard' });
             }
         }

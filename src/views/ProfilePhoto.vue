@@ -5,15 +5,15 @@
             class="tile"
             :style="{ 'background-image': `url(${ photo.src })` }"
         >
-            <div class="overlay" v-if="photo.category">
+            <div class="overlay">
                 <div class="overlay__first-block">
                     <span class="title">{{ photo.category }}</span>
                     <StarRating
                         class="star-rating"
                         :rating="rating"
-                        max-rating="1"
-                        star-size="20"
-                        read-only="true"
+                        :max-rating="1"
+                        :star-size="20"
+                        :read-only="true"
                         :show-rating="false"
                     />
                     <span>{{ rating }}</span>
@@ -42,6 +42,17 @@
             >
                 <img src="@/assets/img/person.svg" width="32" alt="Avatar">
                 <p>{{ comment.comment }}</p>
+                <div class="star-container">
+                    {{ comment.star }}
+                    <StarRating
+                        class="star-rating"
+                        :rating="parseInt(comment.star)"
+                        :max-rating="10"
+                        :star-size="20"
+                        :read-only="true"
+                        :show-rating="false"
+                    />
+                </div>
                 <span class="time-right">{{ $moment(parseInt(comment.date)).format("DD-MM-YYYY HH:mm:ss") }}</span>
             </div>
         </div>
@@ -76,10 +87,16 @@ export default {
 
         const ratings = this.comments.map(el => parseInt(el.star));
         this.rating = ratings.reduce((x, y) => x + y) / ratings.length;
+
+        this.handleChangeSort();
     },
     methods: {
         handleChangeSort() {
-            
+            if (this.selectedSort === 'new') {
+                this.comments.sort((a, b) => parseInt(b.date) - parseInt(a.date));
+            } else if (this.selectedSort === 'old') {
+                this.comments.sort((a, b) => parseInt(a.date) - parseInt(b.date));
+            }
         }
     }
 }
@@ -176,6 +193,11 @@ export default {
             font-size: 14px;
             line-height: 22px;
         }
+    }
+
+    .star-container {
+        display: flex;
+        gap: 6px;
     }
 }
 </style>

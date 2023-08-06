@@ -27,8 +27,8 @@
         </div>
         <Modal v-if="isModal && type==='comment'" @hideModal="hideModal" :header="$t('modal.comment')">
             <template v-slot:body>
-                <Input @onText="handleText"/>
-                <span class="input-text">{{ $t('modal.character-number', { number: `${ comment.length }` }) }}</span>
+                <Textarea @onText="handleText"/>
+                <span class="textarea-text">{{ $t('modal.character-number', { number: `${ comment.length }` }) }}</span>
             </template>
             <template v-slot:footer>
                 <Button 
@@ -53,9 +53,9 @@
                         <option value="" disabled hidden>{{ $t('modal.choose-outfit') }}</option>
                         <option v-for="outfit in outfits" :key="outfit.outfit_id">{{ outfit[`name_${ $i18n.locale }`] }}</option>
                     </select>
-                    <div class="input-wrapper">
-                        <Input @onText="handleInfoText"/>
-                        <span class="input-text">{{ $t('modal.character-number', { number: `${ info.length }` }) }}</span>
+                    <div class="textarea-wrapper">
+                        <Textarea @onText="handleInfoText"/>
+                        <span class="textarea-text">{{ $t('modal.character-number', { number: `${ info.length }` }) }}</span>
                     </div>
                 </div>
             </template>
@@ -82,7 +82,7 @@ import Tinder from "vue-tinder";
 import RoundButton from '@/components/RoundButton';
 import Modal from '@/components/Modal';
 import Button from '@/components/Button';
-import Input from '@/components/Input';
+import Textarea from '@/components/Textarea';
 import ModalMixin from '@/mixins/ModalMixin';
 import {
     getPhotos,
@@ -102,7 +102,7 @@ import closeSmallIcon from '@/assets/img/close_small.svg';
 
 export default {
     name: 'TinderCards',
-    components: { CameraBtn, Tinder, RoundButton, Modal, Button, Input },
+    components: { CameraBtn, Tinder, RoundButton, Modal, Button, Textarea },
     mixins: [ModalMixin],
     data() {
         return {
@@ -311,7 +311,7 @@ export default {
   max-width: 355px;
 }
 
-.input-text {
+.textarea-text {
     display: flex;
     justify-content: flex-end;
 }
@@ -328,8 +328,8 @@ export default {
         border-radius: 10px;
     }
 
-    .input-wrapper {
-        .input {
+    .textarea-wrapper {
+        .textarea {
             height: 100px;
             min-width: 300px;
         }

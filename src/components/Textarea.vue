@@ -1,21 +1,15 @@
 <template>
-    <input
+    <textarea
         v-model="text"
-        class="input"
+        class="textarea"
         @input="$emit('onText', text)"
-        :placeholder="placeholder"
     >
+    </textarea>
 </template>
 
 <script>
 export default {
-    name: 'Input',
-    props: {
-        placeholder: {
-            type: String,
-            default: ''
-        }
-    },
+    name: 'Textarea',
     data() {
         return {
             text: ''
@@ -25,14 +19,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.input {
+.textarea {
     width: 100%;
-    padding: 4px 22px;
+    padding: 16px 18px 0;
     border-radius: 10px;
     border: 1px solid #4F4F4F;
     resize: none;
     font-weight: 500;
     font-size: 16px;
-    line-height: 12px;
+    height: 150px;
+    line-height: 18px;
 }
 </style>

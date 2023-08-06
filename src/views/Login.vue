@@ -2,8 +2,24 @@
     <div class="login">
         <div class="login__wrapper">
             <img class="login__logo" :src="logo"/>
-            <h1 class="login__title">{{ $t('login') }}</h1>
-            <div class="google-login-btn" id="googleLoginBtn"></div> 
+            <h1 class="login__title">{{ mode === 'login' ? $t('login') : $t('register') }}</h1>
+            <div v-if="showGoogleLogin" class="google-login-btn" id="googleLoginBtn"></div>
+            <div v-if="mode === 'login'" class="login-block">
+                <Input @onText="handleLoginEmail" :placeholder="$t('login.placeholder.email')"/>
+                <span v-if="showErrorMsg" class="error-msg">{{ $t('login.error-msg') }}</span>
+                <Button class="btn--primary" :text="$t('login.btn')" @click.native="handleLogin"/>
+                <a class="link" @click="mode = 'register'">{{ $t('register.btn') }}</a>
+            </div>
+            <div v-if="mode === 'register'" class="register-block">
+                <Input @onText="(e) => handleRegister('name', e)" :placeholder="$t('login.placeholder.name')"/>
+                <span v-if="validationErrors.name" class="error-msg">{{ $t('registration.incorrect.name') }}</span>
+                <Input @onText="(e) => handleRegister('surname', e)" :placeholder="$t('login.placeholder.surname')"/>
+                <span v-if="validationErrors.surname" class="error-msg">{{ $t('registration.incorrect.surname') }}</span>
+                <Input @onText="(e) => handleRegister('email', e)" :placeholder="$t('login.placeholder.email')"/>
+                <span v-if="validationErrors.email" class="error-msg">{{ $t('registration.incorrect.email') }}</span>
+                <Button class="btn--primary" :text="$t('register.btn')" @click.native="handleRegisterBtn"/>
+                <a class="link" @click="mode = 'login'">{{ $t('login.link.btn') }}</a>
+            </div>
         </div>
     </div>
 </template>
@@ -11,17 +27,39 @@
 <script>
 import jwtDecode from 'jwt-decode';
 import { setUser, getUser } from '@/api/index';
+import Button from '@/components/Button';
+import Input from '@/components/Input';
 import logo from '@/assets/img/logo.svg';
 
 export default {
-  name: 'Login',
+    name: 'Login',
+    components: { Button, Input },
     data() {
         return {
             interval: 0,
+            showGoogleLogin: false,
+            loginEmail: '',
+            register: {
+                name: '',
+                surname: '',
+                email: '',
+                avatar: ''
+            },
+            validationErrors: {
+                name: false,
+                surname: false,
+                email: false
+            },
+            showErrorMsg: false,
+            mode: 'login',
             logo
         }
     },
     async mounted() {
+        if (process.env.NODE_ENV !== 'development') return;
+
+        this.showGoogleLogin = true;
+
         this.interval = setInterval(() => {
             if (!window.google?.accounts) return;
 
@@ -66,6 +104,39 @@ export default {
             this.$store.commit('setUserId', resp?.data[0]?.user_id);
             this.$router.push({ path: '/dashboard' });
           }
+        },
+        handleLoginEmail(text) {
+            this.loginEmail = text;
+        },
+        handleRegister(type, text) {
+            this.register[type] = text;
+        },
+        async handleRegisterBtn() {
+            this.validationErrors.name = !this.register.name;
+            this.validationErrors.surname = !this.register.surname;
+            this.validationErrors.email = !this.register.email;
+
+            if (this.validationErrors.name || this.validationErrors.surname || this.validationErrors.email) return;
+
+            const resp = await setUser(this.register.surname, this.register.name, this.register.avatar, this.register.email);
+
+            this.$store.commit('setName', this.register.surname);
+            this.$store.commit('setSurname', this.register.name);
+            this.$store.commit('setEmail', this.register.email);
+            this.$store.commit('setAvatar', this.register.avatar);
+
+            this.$store.commit('setUserId', resp?.data[0]);
+            this.$router.push({ path: '/dashboard' });
+        },
+        async handleLogin() {
+            const resp = await getUser(this.loginEmail);
+
+            if (!resp?.data.length) {
+                this.showErrorMsg = true
+            } else {
+                this.$store.commit('setUserId', resp?.data[0]);
+                this.$router.push({ path: '/dashboard' });
+            }
         }
     }
 }
@@ -109,6 +180,30 @@ export default {
     .google-login-btn {
         height: 32px;
         overflow: hidden;
+    }
+
+    .login-block {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 12px;
+    }
+
+    .register-block {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 12px;
+    }
+
+    .error-msg {
+        color: red;
+        font-size: 12px;
+    }
+
+    .link {
+        align-self: center;
+        cursor: pointer;
     }
 }
 </style>

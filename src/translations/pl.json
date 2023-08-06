@@ -1,5 +1,6 @@
 {
     "login": "Logowanie",
+    "register": "Rejestracja",
     "modal.comment": "Zostaw komentarz",
     "modal.cancel": "Wróć",
     "modal.like": "Podoba mi się",
@@ -14,5 +15,15 @@
     "settings.logout": "Wyloguj",
     "profile.photo.old": "Najstarsze",
     "profile.photo.new": "Najnowsze",
-    "profile.sort": "Sortuj po:"
+    "profile.sort": "Sortuj po:",
+    "login.btn": "Zaloguj",
+    "login.placeholder.email": "Adres email",
+    "login.placeholder.name": "Imię",
+    "login.placeholder.surname": "Nazwisko",
+    "login.error-msg": "Niepoprawny email",
+    "register.btn": "Zarejestruj się",
+    "login.link.btn": "Zaloguj się",
+    "registration.incorrect.name": "Niepoprawnie wprowadzone imię",
+    "registration.incorrect.surname": "Niepoprawnie wprowadzone nazwisko",
+    "registration.incorrect.email": "Niepoprawnie wprowadzony adres email"
 }

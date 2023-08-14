@@ -5,7 +5,7 @@
             <h1 class="login__title">{{ mode === 'login' ? $t('login') : $t('register') }}</h1>
             <div v-if="showGoogleLogin" class="google-login-btn" id="googleLoginBtn"></div>
             <div v-if="mode === 'login'" class="login-block" key="login">
-                <Input @onText="handleLoginEmail" :placeholder="$t('login.placeholder.email')"/>
+                <Input @onText="handleLoginEmail" @keyup.enter.native="handleLogin" :placeholder="$t('login.placeholder.email')"/>
                 <span v-if="showErrorMsg" class="error-msg">{{ $t('login.error-msg') }}</span>
                 <Button class="btn--primary" :text="$t('login.btn')" @click.native="handleLogin"/>
                 <a class="link" @click="mode = 'register'">{{ $t('register.btn') }}</a>

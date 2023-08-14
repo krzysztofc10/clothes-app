@@ -8,7 +8,7 @@
         >
             <template slot-scope="scope">
                 <div
-                    :class="[ 'pic', { 'pic--last' : scope.data.last_one } ]"
+                    class="pic"
                     :style="{ 'background-image': `url(${ scope.data.src })` }"
                 />
                 <div class="overlay" v-if="scope.data.category">
@@ -171,7 +171,7 @@ export default {
             this.photo.id = id;
             setTimeout(() => this.showModal('uploadedPhoto'), 0)
         },
-        async mock(append = true) {
+        async mock() {
             const list = [];
             const photos = await getPhotos(this.getUserId);
 
@@ -187,13 +187,10 @@ export default {
                 })
             }
 
-            if (append) {
-                this.queue = this.queue.concat(list);
-            } else {
-                this.queue.unshift(...list);
-            }
+            const uniqueList = list.filter(item => !this.queue.some(q => q.photo_id === item.photo_id));
+            this.queue = this.queue.concat(uniqueList);
         },
-        onSubmit({ type, item }) {
+        async onSubmit({ type, item }) {
             if (item.last_one) {
                 this.mock();
                 return
@@ -204,10 +201,10 @@ export default {
             }
             
             if (type === 'like') {
-                ratePhoto(item.photo_id, this.getUserId, '10', this.comment);
+                await ratePhoto(item.photo_id, this.getUserId, '10', this.comment);
             }
             if (type === 'nope') {
-                ratePhoto(item.photo_id, this.getUserId, '1', this.comment);
+                await ratePhoto(item.photo_id, this.getUserId, '1', this.comment);
             }
             if (this.queue.length < 3) {
                 this.mock();
@@ -292,13 +289,9 @@ export default {
 .pic {
   width: 100%;
   height: 100%;
-  background-size: cover;
+  background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
-
-  &--last {
-    background-position: initial;
-  }
 }
 
 .btns {

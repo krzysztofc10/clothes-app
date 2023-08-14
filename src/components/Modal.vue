@@ -55,7 +55,6 @@ export default {
     }
 
     &__container {
-        width: 420px;
         margin: 0px auto;
         background-color: #fff;
         box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.12), 0px 20px 20px rgba(0, 0, 0, 0.08);

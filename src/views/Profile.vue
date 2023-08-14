@@ -53,7 +53,7 @@ export default {
     async mounted() {
         const data = await getMyPhotos(this.getUserId);
 
-        this.photos = data?.data;
+        this.photos = await data?.data;
 
         this.handleChangeSort();
     },
@@ -105,7 +105,8 @@ export default {
 
         .tile {
             height: 300px;
-            background-size: cover;
+            background-size: contain;
+            background-repeat: no-repeat;
             position: relative;
             cursor: pointer;
         }

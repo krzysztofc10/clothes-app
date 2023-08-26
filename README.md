@@ -1,24 +1,27 @@
-# clothes-app
+# Clothy
 
-## Project setup
+## Frontend development
+
+### Requirements
+
+The only requirement is to have Node.js and npm installed in your system. [Get npm!](https://www.npmjs.com/get-npm).
+
+### Install dependencies
+
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Start the development server
+
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Start the production server
+
 ```
-npm run build
+npm run production
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Server will start on http://localhost:8080/

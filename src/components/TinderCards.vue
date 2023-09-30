@@ -341,6 +341,7 @@ export default {
         height: 32px;
         border: 1px solid #4F4F4F;
         border-radius: 10px;
+        padding: 0 12px;
     }
 }
 </style>

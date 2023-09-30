@@ -58,7 +58,7 @@ export default {
     async mounted() {
         if (process.env.NODE_ENV !== 'development') return;
 
-        this.showGoogleLogin = true;
+        // this.showGoogleLogin = true;
 
         this.interval = setInterval(() => {
             if (!window.google?.accounts) return;

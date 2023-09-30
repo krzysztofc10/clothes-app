@@ -150,8 +150,9 @@ export default {
         width: 100%;
         font-weight: 600;
         font-size: 32px;
-        line-height: 24px;
         margin-top: 20%;
+        line-height: 36px;
+        text-align: center;
     }
 }
 </style>
